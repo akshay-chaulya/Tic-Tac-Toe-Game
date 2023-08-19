@@ -16,8 +16,8 @@ boxes.forEach((box) => {
         let boxText = box.querySelector(".boxtext");
 
         if (boxText.innerHTML == "") {
+            turn.play();
             count++;
-            turn.play()
             if (count % 2 != 0) {
                 boxText.innerHTML = "X"
                 info.innerHTML = `Trun for 0`
@@ -42,23 +42,41 @@ reset.addEventListener("click", () => {
 })
 
 const checkWon = () => {
-    let won =
-        [
-            [0, 1, 2, 5, 5, 0, 20],
-            [3, 4, 5, 5, 15, 0, 20],
-            [6, 7, 8, 5, 25, 0, 20],
-            [0, 3, 6, -5, 15, 90, 20],
-            [1, 4, 7, 5, 15, 90, 20],
-            [2, 5, 8, 15, 15, 90, 20],
-            [0, 4, 8, 2.5, 15, 45, 25],
-            [2, 4, 6, 2.5, 15, 135, 25]
-        ]
+    let won;
+    if (window.matchMedia("(max-width: 600px)").matches) {
+        won =
+            [
+                [0, 1, 2, 10, 10, 0, 40],
+                [3, 4, 5, 10, 30, 0, 40],
+                [6, 7, 8, 10, 50, 0, 40],
+                [0, 3, 6, -10, 30, 90, 40],
+                [1, 4, 7, 10, 30, 90, 40],
+                [2, 5, 8, 30, 30, 90, 40],
+                [0, 4, 8, 5, 30, 45, 50],
+                [2, 4, 6, 5, 30, 135, 50]
+            ]
+    }
+    else {
+        won =
+            [
+                [0, 1, 2, 5, 5, 0, 20],
+                [3, 4, 5, 5, 15, 0, 20],
+                [6, 7, 8, 5, 25, 0, 20],
+                [0, 3, 6, -5, 15, 90, 20],
+                [1, 4, 7, 5, 15, 90, 20],
+                [2, 5, 8, 15, 15, 90, 20],
+                [0, 4, 8, 2.5, 15, 45, 25],
+                [2, 4, 6, 2.5, 15, 135, 25]
+            ]
+    }
+
+
+
 
     won.forEach((e) => {
         if ((boxTextes[e[0]].innerHTML === boxTextes[e[1]].innerHTML) && (boxTextes[e[1]].innerHTML === boxTextes[e[2]].innerHTML) && (boxTextes[e[0]].innerHTML !== "")) {
             gameover.play()
             info.innerHTML = `Won ${boxTextes[e[0]].innerHTML}`;
-            // turn.pause()
             img.style.width = "180px";
             line.style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`
             line.style.width = `${e[6]}vw`

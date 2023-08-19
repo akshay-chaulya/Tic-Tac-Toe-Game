@@ -138,7 +138,7 @@ nav h1 {
 
     .container {
         grid-template-columns: repeat(3, 20vw);
-    grid-template-rows: repeat(3, 20vw);
+        grid-template-rows: repeat(3, 20vw);
     }
 
     .gameInfo {
@@ -149,7 +149,7 @@ nav h1 {
 
 
 @media (max-width: 600px) {
-    
+
     .gameInfo {
         /* font-size: .8em; */
     }
