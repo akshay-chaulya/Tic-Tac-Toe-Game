@@ -16,7 +16,7 @@ boxes.forEach((box) => {
         let boxText = box.querySelector(".boxtext");
         checkWon("true")
 
-        if (checkWon() === "f") {
+        if (checkWon() === false) {
             if (boxText.innerHTML == "") {
                 count++;
                 if (count % 2 != 0) {
@@ -29,14 +29,16 @@ boxes.forEach((box) => {
                 }
 
                 checkWon()
-                if (checkWon() === "f") {
+                if (checkWon() === false) {
                     turn.play();
                 }
                 else {
                     gameover.play()
                 }
+
             }
         }
+
     })
 })
 
@@ -44,23 +46,20 @@ boxes.forEach((box) => {
 reset.addEventListener("click", () => {
     boxTextes.forEach((boxtext) => {
         boxtext.innerHTML = ""
+    })
         img.style.width = "0"
         line.style.width = "0"
 
-        if (info.innerHTML.match("Won")) {
-            console.log()
-            if (info.innerHTML.slice(info.innerHTML.length - 1) === "X") {
-                info.innerHTML = "Trun for 0"
-            }
-            else {
-                info.innerHTML = "Trun for X"
-            }
+        if (count % 2 != 0) {
+            info.innerHTML = `Trun for 0`
         }
-    })
+        else if (count % 2 == 0) {
+            info.innerHTML = `Trun for X`
+        }
 })
 
 const checkWon = (n = null) => {
-    var x = "f";
+    var x = false;
     let won;
     if (window.matchMedia("(max-width: 600px)").matches) {
         won =
@@ -99,17 +98,36 @@ const checkWon = (n = null) => {
             line.style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`
             line.style.width = `${e[6]}vw`
 
-            x = "t";
+            x = true;
 
         }
         else {
-
+            forDraw()
         }
     })
 
     return x;
 }
 
+
+function forDraw() {
+    let boxTextArr = [];
+    boxTextes.forEach((e) => {
+        boxTextArr.push(e.innerHTML)
+    })
+    
+    let xArr = [];
+    for (let i=0; i<9; i++) {
+        if (boxTextArr[i] !== "") {
+            
+            xArr.push(boxTextArr[i]);
+            if (xArr.length === 9) {
+                info.innerHTML = "its a draw"
+            }
+        }
+    }
+    
+}
 
 
 
