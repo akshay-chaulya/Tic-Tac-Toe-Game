@@ -43,7 +43,7 @@ nav h1 {
 
 .line {
     height: 3px;
-    /* width: 20vw; */
+    width: 0;
     transition: width 1s ease-in-out;
     background-color: brown;
     position: absolute;

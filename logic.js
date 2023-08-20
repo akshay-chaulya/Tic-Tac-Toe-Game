@@ -14,20 +14,28 @@ let count = 0;
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
         let boxText = box.querySelector(".boxtext");
+        checkWon("true")
 
-        if (boxText.innerHTML == "") {
-            turn.play();
-            count++;
-            if (count % 2 != 0) {
-                boxText.innerHTML = "X"
-                info.innerHTML = `Trun for 0`
-            }
-            else if (count % 2 == 0) {
-                boxText.innerHTML = "0"
-                info.innerHTML = `Trun for X`
-            }
+        if (checkWon() === "f") {
+            if (boxText.innerHTML == "") {
+                count++;
+                if (count % 2 != 0) {
+                    boxText.innerHTML = "X"
+                    info.innerHTML = `Trun for 0`
+                }
+                else if (count % 2 == 0) {
+                    boxText.innerHTML = "0"
+                    info.innerHTML = `Trun for X`
+                }
 
-            checkWon()
+                checkWon()
+                if (checkWon() === "f") {
+                    turn.play();
+                }
+                else {
+                    gameover.play()
+                }
+            }
         }
     })
 })
@@ -38,10 +46,21 @@ reset.addEventListener("click", () => {
         boxtext.innerHTML = ""
         img.style.width = "0"
         line.style.width = "0"
+
+        if (info.innerHTML.match("Won")) {
+            console.log()
+            if (info.innerHTML.slice(info.innerHTML.length - 1) === "X") {
+                info.innerHTML = "Trun for 0"
+            }
+            else {
+                info.innerHTML = "Trun for X"
+            }
+        }
     })
 })
 
-const checkWon = () => {
+const checkWon = (n = null) => {
+    var x = "f";
     let won;
     if (window.matchMedia("(max-width: 600px)").matches) {
         won =
@@ -75,12 +94,24 @@ const checkWon = () => {
 
     won.forEach((e) => {
         if ((boxTextes[e[0]].innerHTML === boxTextes[e[1]].innerHTML) && (boxTextes[e[1]].innerHTML === boxTextes[e[2]].innerHTML) && (boxTextes[e[0]].innerHTML !== "")) {
-            gameover.play()
             info.innerHTML = `Won ${boxTextes[e[0]].innerHTML}`;
             img.style.width = "180px";
             line.style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`
             line.style.width = `${e[6]}vw`
+
+            x = "t";
+
+        }
+        else {
+
         }
     })
+
+    return x;
 }
+
+
+
+
+
 
